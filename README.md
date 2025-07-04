@@ -1,4 +1,4 @@
-# dbt with Snowflake E-commerce
+# 🧱 dbt E-commerce Data Transformation Project
 ### 📁 Project Folder Structure
 
 ```
@@ -20,7 +20,18 @@ dbt-ecommerce-project/
 ├── README.md
 └── .gitignore
 ```
-Project Explanation:
+## Table of contents
+ - [Project Explanation](#project-explanation)
+ - [Overview](#overview)
+ - [Objectives](#objectives)
+ - [Project Structure](#project-structure)
+ - [Documentation](#documentation)
+ - [Final Outcome](#final-outcome)
+ - [Skills Demonstrated](#skills-demonstrated)
+
+
+## [Project Explanation]()
+
 - models/staging/: cleans and standardizes raw data
 
 - models/marts/: final business-ready tables (marts)
@@ -30,15 +41,16 @@ Project Explanation:
 - tests: Contains custom SQL tests for validating business rules (e.g. no negative totals, unique keys)
 
 - README.md: explains the project to viewers
-# 🧱 dbt E-commerce Data Transformation Project
 
-## 🔍 Overview
+
+
+##  [Overview]()
 
 This project demonstrates a modular data transformation pipeline using [dbt (data build tool)](https://www.getdbt.com/) on **Snowflake**, designed to model and analyze raw e-commerce data. It applies staging, transformation, testing, and documentation best practices aligned with the dbt development workflow.
 
 ---
 
-## 🎯 Objectives
+## [Objectives]()
 
 - Clean and stage raw e-commerce datasets
 - Create reusable models and apply transformations
@@ -48,7 +60,7 @@ This project demonstrates a modular data transformation pipeline using [dbt (dat
 
 ---
 
-## 🧱 Project Structure
+## [Project Structure]()
 
 ### 1. **Snowflake Setup**
 
@@ -277,7 +289,7 @@ having total_price < 0
 
 ```
 ---
-### 6. **Documentation**
+### 6. [Documentation]()
 
 I created multiple documentation at the model level, column level, and source level. Here is an example of my documentation at source level:
 
@@ -298,12 +310,12 @@ I created multiple documentation at the model level, column level, and source le
 ```
 ---
 
-### 7. **Final Outcome**
+### 7. [Final Outcome]()
 I used dbt run and dbt build to compile and execute the models in the targeted Snowflake warehouse. I also configured a production environment in dbt and scheduled jobs to run at specific hours. 
 
 After execution, I successfully verified that the models were materialized in the ANALYTICS_PRODUCTION schema in Snowflake.
 
-### 8. **Skills Demonstrated**
+### 8. [Skills Demonstrated]()
 
 - dbt Cloud & CLI
 
