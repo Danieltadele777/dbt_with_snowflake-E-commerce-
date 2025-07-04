@@ -183,6 +183,136 @@ WHERE rn = 1
 ### 5. **Marts Layer**
 Built a final e-commerce table using staged data.
 
-Example (stg_item.sql):
+Example (dim_e_commerce.sql):
 
 ```yaml
+{{
+    config(materialized='table')
+}}
+
+WITH ITEM AS (
+  SELECT *
+  FROM {{ 
+           ref("stg_item")
+  }}
+),
+
+SELLER AS (
+  SELECT *
+  FROM 
+     {{
+        ref("stg_seller")
+     }}
+),
+
+ORDER_TABLE AS (
+  SELECT *
+  FROM 
+     {{
+        ref("stg_order")
+     }}
+),
+
+PRODUCT AS (
+  SELECT *
+  FROM 
+    {{
+         ref("stg_product")
+    }}
+),
+
+TOTAL AS (
+  SELECT
+    i.order_id,
+    i.product_id,
+    i.seller_id,
+    i.price,
+    i.freight_value,
+    s.seller_city,
+    s.seller_state,
+    o.customer_id,
+    o.order_status,
+    o.estimated_date,
+    p.product_category_name
+  FROM ITEM i
+  JOIN SELLER s ON i.seller_id = s.seller_id
+  JOIN ORDER_TABLE o ON i.order_id = o.order_id
+  JOIN PRODUCT p ON p.product_id = i.product_id
+)
+
+SELECT *
+FROM TOTAL
+
+```
+---
+
+### 6. **Data Quality tests at Source and Model levels**
+Created data quality tests at the source and model levels. The model-level data quality checks are used to check data tests like uniqueness and non-null values of my models. The source-level data tests I used it to check our row data ingested from an outside source, if it fits our data test logic.
+
+Here is an example for a data test at the model level:
+
+```yaml
+models:
+  - name: stg_daily
+    columns:
+      - name: DATUM
+        tests:
+          - not_null
+```
+---
+I also created custom-based SQL logic test to check the price column:
+
+```yaml
+with item as (
+    select *
+    from {{ ref('stg_item') }}
+)
+
+select 
+  order_id,
+  sum(price) as total_price
+from item
+group by order_id
+having total_price < 0
+
+```
+---
+### 6. **Documentation**
+
+I created multiple documentation at the model level, column level, and source level. Here is an example of my documentation at source level:
+
+```yaml
+
+{% docs order_status %}
+
+| status         | definition                                                    |
+|----------------|---------------------------------------------------------------|
+| placed         | Order placed but not yet shipped                              |
+| shipped        | Order has been shipped but hasn't yet been delivered          |
+| completed      | Order has been received by customers                          |
+| return_pending | Customer has indicated they would like to return this item    |
+| returned       | Item has been returned                                        |
+
+{% enddocs %}
+
+```
+---
+
+### 7. **Final Outcome**
+I used dbt run and dbt build to compile and execute the models in the targeted Snowflake warehouse. I also configured a production environment in dbt and scheduled jobs to run at specific hours. 
+
+After execution, I successfully verified that the models were materialized in the ANALYTICS_PRODUCTION schema in Snowflake.
+
+### 8. **Skills Demonstrated**
+
+- dbt Cloud & CLI
+
+- SQL transformation logic
+
+- Snowflake warehouse integration
+
+- Jinja templating & YAML config
+
+- Testing & documentation in dbt
+
+- Data modeling best practices (modular layers)
