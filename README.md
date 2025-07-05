@@ -76,7 +76,7 @@ I created three schemas:
 
 ### 2. **Source Layer (`source.yml`)**
 
-Defined raw source tables for daily, hourly, monthly, and weekly sales:
+Defined raw source tables for item, order, product, and seller e-commerce datasets:
 
 ```yaml
 version: 2
@@ -264,12 +264,25 @@ Created data quality tests at the source and model levels. The model-level data 
 Here is an example for a data test at the model level:
 
 ```yaml
+version: 2
+
 models:
-  - name: stg_daily
+  - name: stg_order
+    description: one distinct order per row
     columns:
-      - name: DATUM
+      - name: ORDER_ID
+        description: each order_id is uniquee
         tests:
           - not_null
+          - unique
+
+  - name: stg_item
+    columns:
+      - name: ORDER_ID
+        description: "{{ doc('order_status')}}" ### for learning purpose only
+        tests:
+          - not_null
+          - unique
 ```
 ---
 I also created custom-based SQL logic test to check the price column:
