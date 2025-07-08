@@ -343,6 +343,6 @@ After execution, I successfully verified that the models were materialized in th
 
 - Data modeling best practices (modular layers)
 
-### 8. [The DAG]()
+### 9. [The DAG]()
 <img width="1209" alt="DAG1" src="https://github.com/user-attachments/assets/af7da372-6a1e-4836-9763-4e270a4557c8" />
 
