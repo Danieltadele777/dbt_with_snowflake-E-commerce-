@@ -28,6 +28,7 @@ dbt-ecommerce-project/
  - [Documentation](#documentation)
  - [Final Outcome](#final-outcome)
  - [Skills Demonstrated](#skills-demonstrated)
+ - [The DAG](#the-dag)
 
 
 ## [Project Explanation]()
@@ -341,3 +342,7 @@ After execution, I successfully verified that the models were materialized in th
 - Testing & documentation in dbt
 
 - Data modeling best practices (modular layers)
+
+### 8. [The DAG]()
+<img width="1209" alt="DAG1" src="https://github.com/user-attachments/assets/af7da372-6a1e-4836-9763-4e270a4557c8" />
+
